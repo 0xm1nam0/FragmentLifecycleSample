@@ -1,3 +1,4 @@
+
 package com.example.wagatsumakenju.fragmentlifecyclesample;
 
 import android.os.Handler;
@@ -51,5 +52,28 @@ public abstract class PauseHandler extends Handler {
      */
     protected abstract boolean storeMessage(Message message);
 
-    
+    /**
+     * Notification message to be processed. This will either be directly from
+     * handleMessage or played back from a saved message when the activity was
+     * paused.
+     *
+     * @param message the message to be handler
+     */
+    protected abstract void processMessage(Message message);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    final public void handleMessage(Message msg) {
+        if (paused) {
+            if (storeMessage(msg)) {
+                Message msgCopy = new Message();
+                msgCopy.copyFrom(msg);
+                messageQueueBuffer.add(msgCopy);
+            }
+        } else {
+            processMessage(msg);
+        }
+    }
 }

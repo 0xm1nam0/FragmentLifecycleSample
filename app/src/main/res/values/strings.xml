@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FragmentLifecycleSample</string>
+    <string name="count">Count</string>
+    <string name="btn_text">Show</string>
 </resources>
